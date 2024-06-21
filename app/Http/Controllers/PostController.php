@@ -8,47 +8,48 @@ class PostController extends Controller
 {
     public function index() {
         $posts = Post::all();
-        $lox = Post::where('is_published', 1)->first();
-        $post = Post::find(1);
-        echo 'aafafaf';
-        dump($post->content);
-        dump($posts);
-        foreach($posts as $pos) {
-            dump($pos->title);
-        };
-        dump($lox);
-        return view('posts', compact('posts'));
+        // $lox = Post::where('is_published', 1)->first();
+        // $post = Post::find(1);
+        // echo 'aafafaf';
+        // dump($post->content);
+        // dump($posts);
+        // foreach($posts as $pos) {
+        //     dump($pos->title);
+        // };
+        // dump($lox);
+        return view('post.index', compact('posts'));
         // dd($post);
     }
 
     public function create() {
-        $postsArr = [
-            [
-                'title'=>'title of post',
-                'content'=>'some interesting content',
-                'image'=>'imagelable.jpg',
-                'likes'=>20,
-                'is_published'=>1,
-            ],
-            [
-                'title'=>'another title of post',
-                'content'=>'another some interesting content',
-                'image'=>'another imagelable.jpg',
-                'likes'=>50,
-                'is_published'=>1,
-            ]
-            ];
-            foreach($postsArr as $po) {
-                // Post::create();
-                Post::create([
-                    'title' => $po['title'],
-                    'post_content' => $po['content'],
-                    'image' => $po['image'],
-                    'likes' => $po['likes'],
-                    'is_published' => $po['is_published'],
-                ]);
-            }
-            dd('created');
+        // $postsArr = [
+        //     [
+        //         'title'=>'title of post',
+        //         'content'=>'some interesting content',
+        //         'image'=>'imagelable.jpg',
+        //         'likes'=>20,
+        //         'is_published'=>1,
+        //     ],
+        //     [
+        //         'title'=>'another title of post',
+        //         'content'=>'another some interesting content',
+        //         'image'=>'another imagelable.jpg',
+        //         'likes'=>50,
+        //         'is_published'=>1,
+        //     ]
+        //     ];
+        //     foreach($postsArr as $po) {
+        //         // Post::create();
+        //         Post::create([
+        //             'title' => $po['title'],
+        //             'post_content' => $po['content'],
+        //             'image' => $po['image'],
+        //             'likes' => $po['likes'],
+        //             'is_published' => $po['is_published'],
+        //         ]);
+        //     }
+        //     dd('created');
+        return view('post.create');
     }
 
     public function update() {
@@ -107,5 +108,16 @@ class PostController extends Controller
             'is_published' => 0,
         ]);
         dd($post->title); //херня какая то
+    }
+
+    public function store() {
+        $data=request()->validate([
+            'title'=> 'string',
+            'content'=>'string',
+            'image'=>'string',
+        ]);
+        Post::create($data);
+        return redirect('/posts');
+        // return redirect()->route('post.index');
     }
 }
