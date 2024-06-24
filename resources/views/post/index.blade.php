@@ -18,8 +18,12 @@
 @extends('layouts.main')
 @section('content')
 <div>
+<a class="btn btn-info mb-3" href="/posts/create">create</a>
     @foreach($posts as $post)
-    <div>{{$post->id}}. {{$post->title}}</div>
+    <div>
+        <a href="{{route('post.show', $post->id)}}">{{$post->id}}. {{$post->title}}</a>
+        <p>{{$post->content}}
+    </div>
     @endforeach
 </div>
 @endsection
