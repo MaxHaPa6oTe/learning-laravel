@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Post;
+use App\Models\Tag;
 
 class PostController extends Controller
 {
@@ -19,6 +21,7 @@ class PostController extends Controller
         // dump($lox);
         return view('post.index', compact('posts'));
         // dd($post);
+    
     }
 
     public function create() {
@@ -49,7 +52,8 @@ class PostController extends Controller
         //         ]);
         //     }
         //     dd('created');
-        return view('post.create');
+        $categories = Category::all();
+        return view('post.create', compact('categories'));
     }
 
     public function update() {
@@ -59,6 +63,7 @@ class PostController extends Controller
             'title' => 'updated',
             'likes' => 102,
             'is_published' => 0,
+            'category_id'=>'',
         ]);
         dd($post);
     }
@@ -115,6 +120,7 @@ class PostController extends Controller
             'title'=> 'string',
             'content'=>'string',
             'image'=>'string',
+            'category_id'=>'',
         ]);
         Post::create($data);
         return redirect('/posts');
@@ -127,13 +133,15 @@ class PostController extends Controller
     }
 
     public function edit(Post $post) {
-        return view('post.edit', compact('post')); 
+        $categories = Category::all();
+        return view('post.edit', compact('post','categories')); 
     }
     public function updatee(Post $post) {
         $data=request()->validate([
             'title'=> 'string',
             'content'=>'string',
             'image'=>'string',
+            'category_id'=>'',
         ]);
         $post->update($data);
         return redirect()->route('post.show',$post->id);

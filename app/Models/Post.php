@@ -14,4 +14,13 @@ class Post extends Model
     protected $table = 'posts';
     protected $guarded = [];    //hразрешает добавлять данные в базу
     // protected $fillable = [];   //запрещает добавлять данные в базу
+
+    public function category() {
+        return $this->belongsTo(Category::class, 'category_id', 'id');
+    }
+
+    public function tags() {
+        return $this->belongsToMany(Tag::class,'post_tags', 'post_id','tag_id');
+    }
+
 }

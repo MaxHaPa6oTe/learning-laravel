@@ -16,7 +16,15 @@
     <label for="exampleInputEmail1" class="form-label">Image</label>
     <input value="{{$post->image}}" name='image' type="text" class="form-control" placeholder='Image' id="image">
   </div>
-  <button type="submit" class="btn btn-primary">Update</button>
+  <label for="exampleDataList" class="form-label">Datalist example</label>
+<select name="category_id" class='form-control' id="category">
+    @foreach($categories as $category)
+<option 
+{{ $category->id === $post->category_id ? ' selected' : ''  }}
+value="{{$category->id}}">{{$category->title}}</option>
+    @endforeach
+</select>
+  <button type="submit" class="mt-3 btn btn-primary">Update</button>
 </form>
 </div>
 @endsection
