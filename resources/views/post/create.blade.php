@@ -5,21 +5,35 @@
   @csrf
   <div class="mb-3">
     <label for="exampleInputEmail1" class="form-label">Email address</label>
-    <input name="title" type="text" class="form-control" id="title" placeholder="Title">
+    <input value="{{old('title')}}"  name="title" type="text" class="form-control" id="title" placeholder="Title">
+    @error('title')
+    <p class='text-danger'>{{$message}}</p>
+    @enderror
   </div>
   <div class="mb-3">
     <label for="content" class="form-label">Content</label>
-    <textarea name='content' class="form-control" id="content" placeholder="Content"></textarea>
+    <textarea name='content' class="form-control" id="content" placeholder="Content">{{old('content')}}</textarea>
   </div>
   <div class="mb-3">
     <label for="exampleInputEmail1" class="form-label">Image</label>
-    <input name='image' type="text" class="form-control" placeholder='Image' id="image">
+    <input value="{{old('image')}}" name='image' type="text" class="form-control" placeholder='Image' id="image">
+    @error('image')
+    <p class='text-danger'>{{$message}}</p>
+    @enderror
   </div>
-  <label for="exampleDataList" class="form-label">Datalist example</label>
+  <label for="exampleDataList" class="form-label">Categories</label>
 <select name="category_id" class='form-control' id="category">
     @foreach($categories as $category)
-<option value="{{$category->id}}">{{$category->title}}</option>
+<option 
+{{old('category_id') == $category->id ? 'selected':''}}
+value="{{$category->id}}">{{$category->title}}</option>
     @endforeach
+</select>
+<label for='tags'>Tags</label>
+<select multiple name='tags[]' class="form-control" id="tags">
+  @foreach($tags as $tag)
+  <option value="{{$tag->id}}">{{$tag->title}}</option>
+  @endforeach
 </select>
   <button type="submit" class="btn btn-primary mt-3">Submit</button>
 </form>

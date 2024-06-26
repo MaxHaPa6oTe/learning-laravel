@@ -8,4 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class PostTag extends Model
 {
     use HasFactory;
+    // protected $guarded = false;
+    protected $fillable = ['post_id', 'tag_id'];
 }
