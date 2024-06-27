@@ -10,7 +10,6 @@ use App\Models\Tag;
 class PostController extends Controller
 {
     public function index() {
-        $posts = Post::all();
         // $lox = Post::where('is_published', 1)->first();
         // $post = Post::find(1);
         // echo 'aafafaf';
@@ -20,6 +19,7 @@ class PostController extends Controller
         //     dump($pos->title);
         // };
         // dump($lox);
+        $posts = Post::all();
         return view('post.index', compact('posts'));
         // dd($post);
     
@@ -128,6 +128,9 @@ class PostController extends Controller
         ]);
         $tags = $data['tags'];
         unset($data['tags']);
+        $post = Post::create($data);
+        $post->tags()->attach($tags);
+        return redirect('/posts');
         // $post = Post::firstOrCreate($data);
         // foreach ($tags as $tag) {
         //     PostTag::firstOrCreate([
@@ -135,9 +138,6 @@ class PostController extends Controller
         //         'post_id' => $post->id,
         //     ]);
         // }
-        $post = Post::create($data);
-        $post->tags()->attach($tags);
-        return redirect('/posts');
         // return redirect()->route('post.index');
     }
 
@@ -149,7 +149,6 @@ class PostController extends Controller
     public function edit(Post $post) {
         $categories = Category::all();
         $tags = Tag::all();
-
         return view('post.edit', compact('post','categories','tags')); 
     }
     public function updatee(Post $post) {
